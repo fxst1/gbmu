@@ -1,6 +1,6 @@
-#include <rom.hpp>
+#include <gameboy.hpp>
 
-Rom::Rom(const char *filename)
+GameboyRom::GameboyRom(const char *filename)
 {
 	this->start_addr = 0;
 	this->game_title = NULL;
@@ -20,11 +20,12 @@ Rom::Rom(const char *filename)
 	this->status = false;
 	this->len = 0;
 	this->buffer = NULL;
-	this->filename = (char*)filename;
-	this->load(filename);
+	this->filename = NULL;
+	if (this->filename)
+		this->load(filename);
 }
 
-Rom::~Rom()
+GameboyRom::~GameboyRom()
 {
 	if (this->status)
 	{
@@ -35,7 +36,7 @@ Rom::~Rom()
 	}
 }
 
-bool		Rom::load(const char *filename)
+bool		GameboyRom::load(const char *filename)
 {
 	int		fd = -1;
 
@@ -54,7 +55,7 @@ bool		Rom::load(const char *filename)
 	return (this->status);
 }
 
-bool		Rom::load(const int fd)
+bool		GameboyRom::load(const int fd)
 {
 	struct stat		stat_buf;
 	long			size = 0;
@@ -93,7 +94,7 @@ static unsigned char	*copystr(const unsigned char *buffer, size_t n)
 	return (buf);
 }
 
-bool		Rom::info(void)
+bool		GameboyRom::info(void)
 {
 	if (this->status == true)
 	{
@@ -148,7 +149,7 @@ bool		Rom::info(void)
 	return (true);
 }
 
-bool		Rom::header()
+bool		GameboyRom::header(void)
 {
 	std::string		s = "";
 
@@ -216,7 +217,7 @@ bool		Rom::header()
 	return (true);
 }
 
-unsigned char	Rom::get_sgb_support_code()
+unsigned char	GameboyRom::get_sgb_support_code()
 {
 	if (this->sgb_support_code == 0 ||
 		this->sgb_support_code == 0x03)
@@ -225,7 +226,7 @@ unsigned char	Rom::get_sgb_support_code()
 		return (0x0);
 }
 
-unsigned char	Rom::get_cgb_support_code()
+unsigned char	GameboyRom::get_cgb_support_code()
 {
 	if (this->cgb_support_code == 0 ||
 		this->cgb_support_code == 0xC0 ||
@@ -235,7 +236,7 @@ unsigned char	Rom::get_cgb_support_code()
 		return (0xC0);
 }
 
-size_t			Rom::get_ram_size()
+size_t			GameboyRom::get_ram_size()
 {
 	if (this->ram_size > 4 || this->ram_size == 1)
 		return (1000000);
@@ -250,7 +251,7 @@ size_t			Rom::get_ram_size()
 	return (0);
 }
 
-size_t			Rom::get_rom_size()
+size_t			GameboyRom::get_rom_size()
 {
 	size_t		size = (this->rom_size + 1) * 256;
 
@@ -260,7 +261,7 @@ size_t			Rom::get_rom_size()
 		return (size);
 }
 
-std::string		Rom::get_cartridge_string()
+std::string		GameboyRom::get_cartridge_string()
 {
 	std::string	s = "";
 
@@ -307,7 +308,7 @@ std::string		Rom::get_cartridge_string()
 	return (s);
 }
 
-std::string		Rom::get_rom_size_string()
+std::string		GameboyRom::get_rom_size_string()
 {
 	std::string	s = "";
 	size_t		size = (this->rom_size + 1) * 256;
@@ -326,7 +327,7 @@ std::string		Rom::get_rom_size_string()
 	return (s);
 }
 
-std::string		Rom::get_ram_size_string()
+std::string		GameboyRom::get_ram_size_string()
 {
 	std::string	s = "";
 
@@ -342,7 +343,7 @@ std::string		Rom::get_ram_size_string()
 	return (s);
 }
 
-std::string		Rom::get_dest_code_string()
+std::string		GameboyRom::get_dest_code_string()
 {
 	std::string	s = "";
 
@@ -354,7 +355,7 @@ std::string		Rom::get_dest_code_string()
 	return (s);
 }
 
-size_t			Rom::calc_checksum()
+size_t			GameboyRom::calc_checksum()
 {
 	size_t		i = 0x134;
 	size_t		sum = 0;
@@ -369,4 +370,25 @@ size_t			Rom::calc_checksum()
 	sum += *(this->buffer + 0x14D);
 
 	return (sum);
+}
+
+unsigned char	*GameboyRom::get_code()
+{
+	if (this->status)
+		return (this->buffer);
+	return (NULL);
+}
+
+unsigned char	*GameboyRom::get_buffer()
+{
+	if (this->status)
+		return (this->buffer);
+	return (NULL);
+}
+
+unsigned short	GameboyRom::get_start_address()
+{
+	if (this->status)
+		return (this->start_addr);
+	return (0);
 }

@@ -15,10 +15,10 @@
 ;	E : 0x5
 ;	H : 0x6
 ;	L : 0x7
-;	PC : 0x8
-;	SP : 0x9  (0xffff Stack size @ 0x10009)
+;	PC : 0x8 - 0x9
+;	SP : 0xA - 0xB (0xffff Stack size @ 0x1000B)
 ;
-;	MEMORY MAP @0x10009
+;	MEMORY MAP @0x1000B
 ;
 ;	Port/Mode Registers <0xFF00>
 ;
@@ -76,34 +76,34 @@
 ;				-> 0xFF3F (0xFF9F)
 ;
 ;
-;	Flags <0xFF>
-;
-;
 ;	Reserved memory address is in edi register
 ;
 
-%include 'flag.s'
+%ifndef	ASM_REG
+%define ASM_REG
+%include 'src/cpu/register.s'
+%include 'src/cpu/instruction.s'
 
 ; Z N H CY
 set_flags_16 :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ebx
-	push dword	ecx
-	push dword	edx
-	push dword	edi
+	push qword	rbx
+	push qword	rcx
+	push qword	rdx
+	push qword	rdi
 
-	push dword	eax					; Save flags code
-	mov dword	eax, esi			; ax <- CPU flags
-	xor dword	edx, edx
-	mov dword	edi, eax			; edi <- eax
+	push qword	rax					; Save flags code
+	mov qword	rax, rsi			; ax <- CPU flags
+	xor qword	rdx, rdx
+	mov qword	rdi, rax			; edi <- eax
 
 	; Manage Z flag
-	mov dword	eax, [esp]
-	mov dword	ebx, 2				; 2 bit code
-	mov dword	ecx, 7				; 8th bit
+	mov qword	rax, [rsp]
+	mov qword	rbx, 2				; 2 bit code
+	mov qword	rcx, 7				; 8th bit
 	call		get_register_code
 
 	mov word	cx, 1000b
@@ -117,7 +117,7 @@ set_flags_16 :
 
 set_flag_z_16:
 
-	mov dword	eax, edi
+	mov qword	rax, rdi
 	and byte	al, 1000000b
 	cmp byte	al, 1000000b
 	cmove word	bx, cx
@@ -127,9 +127,9 @@ set_flags2_16:
 	mov byte	dh, bl
 
 	; Manage N flag
-	mov dword	eax, [esp]			; Get save flags code
-	mov dword	ebx, 2				; 2 bit code
-	mov dword	ecx, 5				; 5th bit
+	mov qword	rax, [rsp]			; Get save flags code
+	mov qword	rbx, 2				; 2 bit code
+	mov qword	rcx, 5				; 5th bit
 	call		get_register_code
 
 	mov word	cx, 100b
@@ -141,9 +141,9 @@ set_flags2_16:
 	or byte		dh, bl				; dh <- dh | bl (insert flag value into dh)
 
 	; Manage H flag
-	mov dword	eax, [esp]
-	mov dword	ebx, 2				; 2 bit code
-	mov dword	ecx, 3				; 3th bit
+	mov qword	rax, [rsp]
+	mov qword	rbx, 2				; 2 bit code
+	mov qword	rcx, 3				; 3th bit
 	call		get_register_code
 
 	mov word	cx, 10b
@@ -157,7 +157,7 @@ set_flags2_16:
 
 set_flag_h_16:
 
-	mov dword	eax, edi
+	mov qword	rax, rdi
 	and byte	al, 1b
 	cmp byte	al, 1b
 	cmove word	bx, cx
@@ -167,9 +167,9 @@ set_flags3_16:
 	or byte		dh, bl				; dh <- dh | bl (insert flag value into dh)
 
 	; Manage CY flag
-	mov dword	eax, [esp]
-	mov dword	ebx, 2				; 2 bit code
-	mov dword	ecx, 1				; 1st bit
+	mov qword	rax, [rsp]
+	mov qword	rbx, 2				; 2 bit code
+	mov qword	rcx, 1				; 1st bit
 	call		get_register_code
 
 	mov word	cx, 1b
@@ -183,7 +183,7 @@ set_flags3_16:
 
 set_flag_cy_16:
 
-	mov dword	eax, edi
+	mov qword	rax, rdi
 	and word	ax, 0x800
 	cmp word	ax, 0x800
 ;	and byte	al, 1b
@@ -195,27 +195,27 @@ set_flagsend_16:
 	or byte		dh, bl				; dh <- dh | bl (insert flag value into dh)
 ;	mov byte	dh, 0xFF
 
-	pop dword	eax
-	pop dword	edi
+	pop qword	rax
+	pop qword	rdi
 
 	; Save flag in RSSP
 	mov byte	dl, 0x0
-	mov byte	[edi + 0x1], dh
+	mov byte	[rdi + 0x1], dh
 
-	pop dword	edx
-	pop dword	ecx
-	pop dword	ebx
+	pop qword	rdx
+	pop qword	rcx
+	pop qword	rbx
 
 	leave
 	ret
 
 get_register_code :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	edx
-	push dword	ecx
+	push qword	rdx
+	push qword	rcx
 
 	; Shift left (7 - X)
 	mov byte	dl, 7
@@ -229,18 +229,18 @@ get_register_code :
 	mov	byte	cl, dl
 	shr byte	al, cl
 
-	pop dword	ecx
-	pop dword	edx
+	pop qword	rcx
+	pop qword	rdx
 
 	leave
 	ret
 
 is_register_8bit :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	mov dword	ebx, 0x1
+	mov qword	rbx, 0x1
 	cmp byte	al, 111b		;is register A
 	je			is_register_ok
 	cmp byte	al, 000b		;B
@@ -255,38 +255,38 @@ is_register_8bit :
 	je			is_register_ok
 	cmp byte	al, 101b		;L
 	je			is_register_ok
-	xor dword	ebx, ebx
+	xor qword	rbx, rbx
 
 	leave
 	ret
 
 is_register_16bit :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	edx
-	mov dword	edx, 0x0
+	push qword	rdx
+	mov qword	rdx, 0x0
 	mov byte	dl, al
-	mov dword	eax, edx
-	pop dword	edx
+	mov qword	rax, rdx
+	pop qword	rdx
 
-	cmp dword	eax, 00b		;is register BC
+	cmp qword	rax, 00b		;is register BC
 	je			is_register_ok
-	cmp dword	eax, 01b		;DE
+	cmp qword	rax, 01b		;DE
 	je			is_register_ok
-	cmp dword	eax, 10b		;HL
+	cmp qword	rax, 10b		;HL
 	je			is_register_ok
-	cmp dword	eax, 11b		;SP
+	cmp qword	rax, 11b		;SP
 	je			is_register_ok
 
-	mov dword	eax, 0x0
+	mov qword	rax, 0x0
 	leave
 	ret
 
 is_register_ok :
 
-	mov dword	eax, 0x1
+	mov qword	rax, 0x1
 
 	leave
 	ret
@@ -295,67 +295,84 @@ is_register_ok :
 
 get_real_address :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ebx
+	push qword	rbx
 
-	mov dword	ebx, edi
-	add dword	ebx, 0x9
+	mov qword	rbx, rdi
+	add qword	rbx, 0xB
 	add word	bx, ax
-	mov dword	eax, ebx
+	mov qword	rax, rbx
 
-	pop dword	ebx
+	pop qword	rbx
+
+	leave
+	ret
+
+get_ram_address :
+
+	push qword	rbp
+	mov qword	rbp, rsp
+
+	push qword	rbx
+
+	mov qword	rbx, rdi
+	add qword	rbx, 0x1000B
+	add word	bx, ax
+	mov qword	rax, rbx
+
+	pop qword	rbx
 
 	leave
 	ret
 
 get_stack_top :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ecx
+	push qword	rcx
 
 	; eax <- Stack start address
-	mov dword	eax, edi
-	add dword	eax, 0xA
+	mov qword	rax, rdi
+	add qword	rax, 0xB
 
 	; ecx <- (size - offset)
-	mov dword	ecx, 0xffff
-	sub dword	ecx, [edi + 0x9]
+	mov qword	rcx, 0xffff
+	sub qword	rcx, [rdi + 0xA]
 
 	; eax <- (start + ecx)
-	add dword	eax, ecx
+	add qword	rax, rcx
 
-	pop dword	ecx
+	pop qword	rcx
 
 	leave
 	ret
 
 load_real_address :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ebx
+	push qword	rbx
 
-	mov dword	ebx, edi
-	sub dword	ebx, 0x9
+	mov qword	rbx, rdi
+	sub qword	rbx, 0x9
 	sub word	bx, ax
 
-	mov dword	eax, 0x0
-	mov byte	al, [ebx]
+	mov qword	rax, 0x0
+	mov byte	al, [rbx]
 
-	pop dword	ebx
+	pop qword	rbx
 
 	leave
 	ret	
 
 get_register_8bit :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
 	cmp byte	al, 111b		;A
 	je			get_register_A
@@ -378,8 +395,8 @@ get_register_8bit :
 
 get_register_16bit_2 :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
 	cmp byte	al, 0b
 	je			get_register_BC
@@ -395,8 +412,8 @@ get_register_16bit_2 :
 
 get_register_16bit :
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
 	cmp byte	al, 0b
 	je			get_register_BC
@@ -412,55 +429,55 @@ get_register_16bit :
 
 get_register_A :
 
-	mov	dword	eax, edi
+	mov	qword	rax, rdi
 
 	leave
 	ret
 
 get_register_B :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x2
+	mov	qword	rax, rdi
+	add qword	rax, 0x2
 
 	leave
 	ret
 
 get_register_C :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x3
+	mov	qword	rax, rdi
+	add qword	rax, 0x3
 
 	leave
 	ret
 
 get_register_D :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x4
+	mov	qword	rax, rdi
+	add qword	rax, 0x4
 
 	leave
 	ret
 
 get_register_E :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x5
+	mov	qword	rax, rdi
+	add qword	rax, 0x5
 
 	leave
 	ret
 
 get_register_H :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x6
+	mov	qword	rax, rdi
+	add qword	rax, 0x6
 
 	leave
 	ret
 
 get_register_L :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x7
+	mov	qword	rax, rdi
+	add qword	rax, 0x7
 
 	leave
 	ret
@@ -469,39 +486,39 @@ get_register_L :
 
 get_register_AF :
 
-	mov	dword	eax, edi
+	mov	qword	rax, rdi
 
 	leave
 	ret
 
 get_register_BC :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x2
+	mov	qword	rax, rdi
+	add qword	rax, 0x2
 
 	leave
 	ret
 
 get_register_DE :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x4
+	mov	qword	rax, rdi
+	add qword	rax, 0x4
 
 	leave
 	ret
 
 get_register_HL :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x6
+	mov	qword	rax, rdi
+	add qword	rax, 0x6
 
 	leave
 	ret
 
 get_register_SP :
 
-	mov	dword	eax, edi
-	add dword	eax, 0x9
+	mov	qword	rax, rdi
+	add qword	rax, 0x9
 
 	leave
 	ret
@@ -540,70 +557,74 @@ set_register_16bit :
 
 set_register_A :
 
-	mov	byte	[edi + 0x0], al
+	mov	byte	[rdi + 0x0], al
 	ret
 
 set_register_B :
 
-	mov	byte	[edi + 0x10], al
+	mov	byte	[rdi + 0x10], al
 	ret
 
 set_register_C :
 
-	mov	byte	[edi + 0x18], al
+	mov	byte	[rdi + 0x18], al
 	ret
 
 set_register_D :
 
-	mov	byte	[edi + 0x20], al
+	mov	byte	[rdi + 0x20], al
 	ret
 
 set_register_E :
 
-	mov	byte	[edi + 0x28], al
+	mov	byte	[rdi + 0x28], al
 	ret
 
 set_register_H :
 
-	mov	byte	[edi + 0x30], al
+	mov	byte	[rdi + 0x30], al
 	ret
 
 set_register_L :
 
-	mov	byte	[edi + 0x38], al
+	mov	byte	[rdi + 0x38], al
 	ret
 
 ;	Register pair
 
 set_register_AF :
 
-	mov	word	[edi + 0x0], ax
+	mov	word	[rdi + 0x0], ax
 	ret
 
 set_register_BC :
 
-	mov	word	[edi + 0x10], ax
+	mov	word	[rdi + 0x10], ax
 	ret
 
 set_register_DE :
 
-	mov	word	[edi + 0x20], ax
+	mov	word	[rdi + 0x20], ax
 	ret
 
 set_register_HL :
 
-	mov	word	[edi + 0x30], ax
+	mov	word	[rdi + 0x30], ax
 	ret
 
 save_register_HL :
 
-	mov	word	[edi + 0x30], ax
+	mov	word	[rdi + 0x30], ax
 	ret
 
 set_register_SP :
 
-	mov	word	[edi + 0x50], ax
+	mov	word	[rdi + 0x50], ax
 	ret
 
 load_register_HL :
 
+	ret
+
+
+%endif

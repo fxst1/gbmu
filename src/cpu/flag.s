@@ -1,3 +1,6 @@
+%ifndef	ASM_FLAG
+%define ASM_FLAG
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ;	Set CY flag depend EAX
@@ -6,14 +9,14 @@
 ;
 set_flag_cy16:
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ecx
-	push dword	ebx
-	push dword	eax
+	push qword	rcx
+	push qword	rbx
+	push qword	rax
 
-	mov dword	ebx, 0b
+	mov qword	rbx, 0b
 	mov word	cx, 1b
 	jc			set_flag_cy16_on
 	jo			set_flag_cy16_on
@@ -23,16 +26,16 @@ set_flag_cy16:
 
 set_flag_cy16_on:
 
-	mov dword	ebx, 1b
+	mov qword	rbx, 1b
 
 set_flag_cy16_end:
 
 	mov word	cx, 0b			; Flag bit index
 	call		change_flag
 
-	pop dword	eax
-	pop dword	ebx
-	pop dword	ecx
+	pop qword	rax
+	pop qword	rbx
+	pop qword	rcx
 
 	leave
 	ret
@@ -45,31 +48,31 @@ set_flag_cy16_end:
 ;
 set_flag_h16:
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ecx
-	push dword	ebx
-	push dword	eax
+	push qword	rcx
+	push qword	rbx
+	push qword	rax
 
-	mov dword	ebx, 0b
+	mov qword	rbx, 0b
 	ja			set_flag_h16_on
-	cmp dword	eax, 0x400
+	cmp qword	rax, 0x400
 	jge			set_flag_h16_on
 	jmp			set_flag_h16_end
 
 set_flag_h16_on:
 
-	mov dword	ebx, 1b
+	mov qword	rbx, 1b
 
 set_flag_h16_end:
 
 	mov word	cx, 1b			; Flag bit index
 	call		change_flag
 
-	pop dword	eax
-	pop dword	ebx
-	pop dword	ecx
+	pop qword	rax
+	pop qword	rbx
+	pop qword	rcx
 
 	leave
 	ret
@@ -82,14 +85,14 @@ set_flag_h16_end:
 ;
 set_flag_z16:
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ecx
-	push dword	ebx
-	push dword	eax
+	push qword	rcx
+	push qword	rbx
+	push qword	rax
 
-	mov dword	ebx, 0b
+	mov qword	rbx, 0b
 	jz			set_flag_z16_on
 	cmp word	ax, 0x0
 	je			set_flag_z16_on
@@ -97,16 +100,16 @@ set_flag_z16:
 
 set_flag_z16_on:
 
-	mov dword	ebx, 1b
+	mov qword	rbx, 1b
 
 set_flag_z16_end:
 
 	mov word	cx, 3			; Flag bit index
 	call		change_flag
 
-	pop dword	eax
-	pop dword	ebx
-	pop dword	ecx
+	pop qword	rax
+	pop qword	rbx
+	pop qword	rcx
 
 	leave
 	ret
@@ -119,14 +122,14 @@ set_flag_z16_end:
 ;
 set_flag_z8:
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	ecx
-	push dword	ebx
-	push dword	eax
+	push qword	rcx
+	push qword	rbx
+	push qword	rax
 
-	mov dword	ebx, 0b
+	mov qword	rbx, 0b
 	jz			set_flag_z16_on
 	cmp byte	al, 0x0
 	je			set_flag_z16_on
@@ -141,11 +144,11 @@ set_flag_z8:
 ;
 change_flag:
 
-	push dword	ebp
-	mov dword	ebp, esp
+	push qword	rbp
+	mov qword	rbp, rsp
 
-	push dword	eax
-	push dword	ecx
+	push qword	rax
+	push qword	rcx
 
 	cmp byte	bl, 0x0
 	je			change_flag_off
@@ -154,8 +157,8 @@ change_flag_on :
 
 	mov byte	bl, 0x1
 	shl byte	bl, cl
-	or byte		[edi + 0x1], bl
-	mov byte	bl, [edi + 0x1]
+	or byte		[rdi + 0x1], bl
+	mov byte	bl, [rdi + 0x1]
 	jmp			change_flag_end
 
 change_flag_off :
@@ -163,14 +166,90 @@ change_flag_off :
 	mov byte	bl, 0x1
 	shl byte	bl, cl
 	not byte	bl
-	and byte	[edi + 0x1], bl
-	mov byte	bl, [edi + 0x1]
+	and byte	[rdi + 0x1], bl
+	mov byte	bl, [rdi + 0x1]
 
 
 change_flag_end :
 
-	pop dword	ecx
-	pop dword	eax
+	pop qword	rcx
+	pop qword	rax
 
 	leave
 	ret
+
+get_flag_cy:
+
+	push qword	rbp
+	mov qword	rbp, rsp
+
+	mov qword	rax, 0x0
+	mov byte	al, [rdi + 0x1]
+	and byte	al, 1000b
+	shl byte	al, 3
+
+	leave
+	ret
+
+
+condition_parse :
+
+	push qword	rbp
+	mov qword	rbp, rsp
+
+	cmp byte	al, 0x0
+	je			condition_parse_nz
+	cmp byte	al, 0x1
+	je			condition_parse_z
+	cmp byte	al, 0x2
+	je			condition_parse_nc
+	jmp			condition_parse_c
+
+condition_parse_nz :
+
+	mov byte	al, [rdi + 0x1]
+	and byte	al, 1000b
+	cmp byte	al, 0x0
+	je			condition_parse_true
+	jmp			condition_parse_false
+
+condition_parse_z :
+
+	mov byte	al, [rdi + 0x1]
+	and byte	al, 1000b
+	cmp byte	al, 0x1
+	je			condition_parse_true
+	jmp			condition_parse_false
+
+condition_parse_nc :
+
+	mov byte	al, [rdi + 0x1]
+	and byte	al, 1b
+	cmp byte	al, 0x0
+	je			condition_parse_true
+	jmp			condition_parse_false
+
+condition_parse_c :
+
+	mov byte	al, [rdi + 0x1]
+	and byte	al, 1b
+	cmp byte	al, 0x1
+	je			condition_parse_true
+	jmp			condition_parse_false
+
+condition_parse_false :
+
+	mov byte	al, 0x0
+	jmp			condition_parse_end
+
+condition_parse_true :
+
+	mov byte	al, 0x1
+	jmp			condition_parse_end
+
+condition_parse_end :
+
+	leave
+	ret
+
+%endif

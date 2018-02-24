@@ -1,15 +1,20 @@
+%ifndef	ASM_BITOP
+%define ASM_BITOP
+%include 'src/cpu/register.s'
+%include 'src/cpu/instruction.s'
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; BIT	b, r | 11 001 011 - 01 b r | P103
 instruction_bit :
 
-	inc dword	ecx
-	push dword	ecx
+	inc qword	rcx
+	push qword	rcx
 
 	; Get r register (eax <- r)
-	mov dword	eax, 0x0
-	mov dword	eax, [edx + ecx]	; opcode
-	mov dword	ebx, 3				; 3 bits
-	mov dword	ecx, 2				; @ 3th bit
+	mov qword	rax, 0x0
+	mov qword	rax, [rdx + rcx]	; opcode
+	mov qword	rbx, 3				; 3 bits
+	mov qword	rcx, 2				; @ 3th bit
 	call		get_register_code
 
 	cmp byte	al, 110b
@@ -17,16 +22,16 @@ instruction_bit :
 
 	; SPECIFIC 8 BIT REGISTER
 	call		get_register_8bit	; eax <- &m
-	mov byte	bl, [eax]			; Save address into bl
+	mov byte	bl, [rax]			; Save address into bl
 
 	; Get b value (eax <- b)
-	mov dword	ecx, [esp]
-	mov dword	eax, [edx + ecx]
-	push dword	ebx
-	mov dword	ebx, 3
-	mov dword	ecx, 5
+	mov qword	rcx, [rsp]
+	mov qword	rax, [rdx + rcx]
+	push qword	rbx
+	mov qword	rbx, 3
+	mov qword	rcx, 5
 	call		get_register_code
-	pop dword	ebx
+	pop qword	rbx
 
 	; dh = b, dl = [r]
 	mov byte	bh, al
@@ -40,42 +45,42 @@ instruction_bit :
 	and byte	bl, 1
 
 	; Set Z flag
-	mov dword	ecx, 3
+	mov qword	rcx, 3
 	call		change_flag
 
 	; Save flags
-	mov dword	ebx, 1
-	mov dword	ecx, 1
+	mov qword	rbx, 1
+	mov qword	rcx, 1
 	call		change_flag
-	mov dword	ebx, 0
-	mov dword	ecx, 2
+	mov qword	rbx, 0
+	mov qword	rcx, 2
 	call		change_flag
 
-	pop dword	ecx
-	inc dword	ecx
+	pop qword	rcx
+	inc qword	rcx
 
 	jmp			instruction_loop
 
 instruction_bit_HL :
 	
 	; Get address
-	mov dword	eax, 0x0
-	mov byte	ah, [edi + 0x6]
-	mov byte	al, [edi + 0x7]
+	mov qword	rax, 0x0
+	mov byte	ah, [rdi + 0x6]
+	mov byte	al, [rdi + 0x7]
 
 	; Load real address on stack
 	call		get_real_address
-	mov dword	ebx, 0x0
-	mov byte	bl, [eax]
+	mov qword	rbx, 0x0
+	mov byte	bl, [rax]
 
 	; Get b value (eax <- b)
-	mov dword	ecx, [esp]
-	mov dword	eax, [edx + ecx]
-	push dword	ebx
-	mov dword	ebx, 3
-	mov dword	ecx, 5
+	mov qword	rcx, [rsp]
+	mov qword	rax, [rdx + rcx]
+	push qword	rbx
+	mov qword	rbx, 3
+	mov qword	rcx, 5
 	call		get_register_code
-	pop dword	ebx
+	pop qword	rbx
 
 	; bh = b, bl = [r]
 	mov byte	bh, al
@@ -87,19 +92,19 @@ instruction_bit_HL :
 	and byte	bl, 1
 
 	; Set Z flag
-	mov dword	ecx, 3
+	mov qword	rcx, 3
 	call		change_flag
 
 	; Save flags
-	mov dword	ebx, 1
-	mov dword	ecx, 1
+	mov qword	rbx, 1
+	mov qword	rcx, 1
 	call		change_flag
-	mov dword	ebx, 0
-	mov dword	ecx, 2
+	mov qword	rbx, 0
+	mov qword	rcx, 2
 	call		change_flag
 
-	pop dword	ecx
-	inc dword	ecx
+	pop qword	rcx
+	inc qword	rcx
 
 	jmp			instruction_loop
 
@@ -107,27 +112,27 @@ instruction_bit_HL :
 
 instruction_set :
 
-	inc dword	ecx
-	push dword	ecx
+	inc qword	rcx
+	push qword	rcx
 
 	; Get b value (eax <- b)
-	mov dword	eax, 0x0
-	mov dword	eax, [edx + ecx]	; opcode
-	mov dword	ebx, 3				; 3 bits
-	mov dword	ecx, 5				; @ 3th bit
+	mov qword	rax, 0x0
+	mov qword	rax, [rdx + rcx]	; opcode
+	mov qword	rbx, 3				; 3 bits
+	mov qword	rcx, 5				; @ 3th bit
 	call		get_register_code
 
 	; bh = b, bl = [r]
 	mov byte	bh, al
 
 	; Get r register (eax <- r)
-	mov dword	ecx, [esp]
-	mov dword	eax, [edx + ecx]
-	push dword	ebx
-	mov dword	ebx, 3
-	mov dword	ecx, 2
+	mov qword	rcx, [rsp]
+	mov qword	rax, [rdx + rcx]
+	push qword	rbx
+	mov qword	rbx, 3
+	mov qword	rcx, 2
 	call		get_register_code
-	pop dword	ebx
+	pop qword	rbx
 
 	cmp byte	al, 110b
 	je			instruction_set_HL
@@ -136,38 +141,38 @@ instruction_set :
 	call		get_register_8bit	; eax <- &m
 
 	; r <- r | (1 << b)
-	push dword	edx
-	mov dword	edx, 1
+	push qword	rdx
+	mov qword	rdx, 1
 	mov byte	cl, bh
 	shl byte	dl, cl
-	or byte		[eax], dl
-	pop dword	edx
+	or byte		[rax], dl
+	pop qword	rdx
 
-	pop dword	ecx
-	inc dword	ecx
+	pop qword	rcx
+	inc qword	rcx
 
 	jmp			instruction_loop
 
 instruction_set_HL :
 
 	; Get address
-	mov dword	eax, 0x0
-	mov byte	ah, [edi + 0x6]
-	mov byte	al, [edi + 0x7]
+	mov qword	rax, 0x0
+	mov byte	ah, [rdi + 0x6]
+	mov byte	al, [rdi + 0x7]
 
 	; Load real address on stack
 	call		get_real_address
 
 	; r <- r | (1 << b)
-	push dword	edx
-	mov dword	edx, 1
+	push qword	rdx
+	mov qword	rdx, 1
 	mov byte	cl, bh
 	shl byte	dl, cl
-	or byte		[eax], dl
-	pop dword	edx
+	or byte		[rax], dl
+	pop qword	rdx
 
-	pop dword	ecx
-	inc dword	ecx
+	pop qword	rcx
+	inc qword	rcx
 
 	jmp			instruction_loop
 
@@ -176,27 +181,27 @@ instruction_set_HL :
 
 instruction_res :
 
-	inc dword	ecx
-	push dword	ecx
+	inc qword	rcx
+	push qword	rcx
 
 	; Get b value (eax <- b)
-	mov dword	eax, 0x0
-	mov dword	eax, [edx + ecx]	; opcode
-	mov dword	ebx, 3				; 3 bits
-	mov dword	ecx, 5				; @ 3th bit
+	mov qword	rax, 0x0
+	mov qword	rax, [rdx + rcx]	; opcode
+	mov qword	rbx, 3				; 3 bits
+	mov qword	rcx, 5				; @ 3th bit
 	call		get_register_code
 
 	; bh = b, bl = [r]
 	mov byte	bh, al
 
 	; Get r register (eax <- r)
-	mov dword	ecx, [esp]
-	mov dword	eax, [edx + ecx]
-	push dword	ebx
-	mov dword	ebx, 3
-	mov dword	ecx, 2
+	mov qword	rcx, [rsp]
+	mov qword	rax, [rdx + rcx]
+	push qword	rbx
+	mov qword	rbx, 3
+	mov qword	rcx, 2
 	call		get_register_code
-	pop dword	ebx
+	pop qword	rbx
 
 	cmp byte	al, 110b
 	je			instruction_res_HL
@@ -205,16 +210,16 @@ instruction_res :
 	call		get_register_8bit	; eax <- &m
 
 	; r <- r & (~(1 << b))
-	push dword	edx
-	mov dword	edx, 1
+	push qword	rdx
+	mov qword	rdx, 1
 	mov byte	cl, bh
 	shl byte	dl, cl
 	not byte	dl
-	and byte	[eax], dl
-	pop dword	edx
+	and byte	[rax], dl
+	pop qword	rdx
 
-	pop dword	ecx
-	inc dword	ecx
+	pop qword	rcx
+	inc qword	rcx
 
 	jmp			instruction_loop
 
@@ -222,23 +227,25 @@ instruction_res :
 instruction_res_HL :
 
 	; Get address
-	mov dword	eax, 0x0
-	mov byte	ah, [edi + 0x6]
-	mov byte	al, [edi + 0x7]
+	mov qword	rax, 0x0
+	mov byte	ah, [rdi + 0x6]
+	mov byte	al, [rdi + 0x7]
 
 	; Load real address on stack
 	call		get_real_address
 
 	; r <- r & (~(1 << b))
-	push dword	edx
-	mov dword	edx, 1
+	push qword	rdx
+	mov qword	rdx, 1
 	mov byte	cl, bh
 	shl byte	dl, cl
 	not byte	dl
-	and byte	[eax], dl
-	pop dword	edx
+	and byte	[rax], dl
+	pop qword	rdx
 
-	pop dword	ecx
-	inc dword	ecx
+	pop qword	rcx
+	inc qword	rcx
 
 	jmp			instruction_loop
+
+%endif

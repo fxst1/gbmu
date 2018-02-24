@@ -1,4 +1,5 @@
-%include 'instruction.s'
+%ifdef aTEST
+%include 'src/cpu/instruction.s'
 
 section		.data
 
@@ -27,7 +28,6 @@ main:
 	mov dword	edi, esp				; Save start of RSSP in edi
 
 	call		init
-
 
 	mov byte	[edi], 0xFF
 	mov byte	[edi + 0x1], 0xEE
@@ -317,3 +317,4 @@ exec :
 
 	leave
 	ret
+%endif

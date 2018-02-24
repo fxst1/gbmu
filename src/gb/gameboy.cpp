@@ -1,108 +1,259 @@
 #include <gameboy.hpp>
+#include <thread>
 
-Gameboy::Gameboy(void)
+unsigned short	opcodes[MAX_OPCODES] = {0x0};
+intptr_t		instructions[MAX_OPCODES] = {0x0};
+unsigned char*	gbram = NULL;
+Gameboy*		gbuser = NULL;
+Gameboy*		gbuser2 = NULL;
+GameboyServer	server = GameboyServer(5);
+GameboyClient	client = GameboyClient();
+
+Gameboy::Gameboy(void):
+	_checksum(false),
+	_skipboot(false),
+	_running(false),
+	_model(0),
+	_transfer_counter(0),
+	_me(client),
+	_ram(NULL),
+	_rom(new GameboyRom()),
+	_cpu(new GameboyCpu()),
+	_output(new GameboyLcdDMG()),
+	_input(new GameboyIO())
+{}
+
+Gameboy::~Gameboy()
+{}
+
+bool			Gameboy::isRunning(void)
 {
-	this->color = false;
-	this->model = Gameboy::DMG;
-	this->game = NULL;
+	return (this->_running);
 }
 
-Gameboy::Gameboy(bool color)
+bool			Gameboy::isReady(void)
 {
-	this->color = color;
-	this->model = Gameboy::CGB;
-	this->game = NULL;
+	return (this->_rom->status == true);
 }
 
-bool	Gameboy::load(const char *filename)
+void			Gameboy::open(const char* filename)
 {
-	if (this->game == NULL)
-		this->game = new Rom(filename);
+	this->_rom->load(filename);
+}
+
+unsigned char	Gameboy::getModel(void)
+{
+	return (this->_model);
+}
+
+void			Gameboy::setModel(unsigned char model)
+{
+	if (this->_model <= Gameboy::SGB)
+		this->_model = model;
 	else
-		this->game->load(filename);
-
-	return (this->status);
+		throw Gameboy::Error("Undefined model");
 }
 
-bool	Gameboy::force(std::string model)
+void			Gameboy::loadState(const char* filename)
 {
-	if (model == "DMG")
-		this->model = Gameboy::DMG;
-	else if (model == "MGB")
-		this->model = Gameboy::MGB;
-	else if (model == "MGB")
-		this->model = Gameboy::MGL;
-	else if (model == "MGB")
-		this->model = Gameboy::CGB;
+	(void)filename;
+	throw Gameboy::Error("Unsupported load state");
+	return ;
+}
+
+void			Gameboy::saveState(const char* filename)
+{
+	(void)filename;
+	throw Gameboy::Error("Unsupported save state");
+	return ;
+}
+
+void			Gameboy::transfer(void)
+{
+	unsigned char	code;
+	bool			bit;
+
+	if (this->_transfer_counter == 0)
+		return ;
+
+	if (*(gbram + 0xFF42) & 1)
+	{
+		try
+		{
+			code = *(gbram + 0xFF41);
+			bit = (code >> 7) & 1;
+			*(gbram + 0xFF41) = (code << 1) & 0xFF; 
+			this->serialSend(bit);
+			this->_transfer_counter--;
+		}
+		catch (Gameboy::Error& e)
+		{
+			std::cerr << "Transfer Failed (master): " << e.what() << std::endl;			
+		}
+	}
 	else
 	{
-		std::cerr << "Undefined model " << this->model << std::endl;	
-		return (false);
+		try
+		{
+			bit = this->serialRecv();
+			code = *(gbram + 0xFF41);
+			code = code << 1;
+			*(gbram + 0xFF41) = code & 0xFF;
+			this->_transfer_counter--;
+		}
+		catch (Gameboy::Error& e)
+		{
+			std::cerr << "Transfer Failed (slave): " << e.what() << std::endl;			
+		}
 	}
-
-	this->get_model();
-	return (true);
 }
 
-bool	Gameboy::get_model(void)
+void			Gameboy::serialSend(bool bit)
 {
-	switch (this->model)
+	unsigned char	buf = (unsigned char)bit;
+
+	if (!this->_me.send(&buf, 1))
 	{
-		case Gameboy::DMG:
-			break;
-
-		case Gameboy::MGB:
-			break;
-
-		case Gameboy::MGL:
-			break;
-
-		case Gameboy::CGB:
-			break;
-
-		case Gameboy::SGB:
-			break;
-
-		default:
-			std::cerr << "Undefined model code " << std::to_string(this->model);
-			return (false);
-	};
-
-	return (true);
+		throw Gameboy::Error("Cannot send " + std::string(bit ? "0x1" : "0x0"));
+	}
 }
 
-bool	Gameboy::start()
+unsigned char	Gameboy::serialRecv(void)
 {
-	unsigned char	support_code;
+	unsigned char	buf = 0;
+	size_t			len = 0;
 
-	if (this->game == NULL || this->game->status == false || this->status == false)
-		return (false);
+	if (!this->_me.recv(&buf, &len))
+		return (buf & 0x1);
+	throw Gameboy::Error("Cannot receive");
+	return (0x2);
+}
 
-	support_code = this->game->get_cgb_support_code();
-	if (support_code == 0 && this->model == Gameboy::CGB)
+bool			Gameboy::isConnected(void)
+{
+	return (this->_me._socket != INVALID_SOCKET);
+}
+
+void			Gameboy::etablishLink(const char* hostname, unsigned short port)
+{
+	this->_me.connect(hostname, port);
+}
+
+void			Gameboy::pause(void)
+{
+	this->_running = false;
+	if (!this->isReady())
+		return ;
+}
+
+void			Gameboy::powerOn(void)
+{
+	if (!this->isReady())
+		return ;
+
+	if (!this->_running)
 	{
-		std::cerr << "Unsupported CGB model" << std::endl;
-		std::cerr << "> Rollback to MGB model" << std::endl;
+		this->_cpu->init();
+		this->_output->init();
+		this->_input->init();
+		this->_running = true;
+		this->_ram = gbram;
+		gbram = this->_rom->get_buffer();
+		std::thread	th(&Gameboy::start, this);
 
-		this->model = Gameboy::MGB;
+		th.detach();
 	}
-	else if (support_code == 0xC0 && this->model != Gameboy::CGB)
+}
+
+void			Gameboy::powerOff(void)
+{
+	if (this->_running)
 	{
-		std::cerr << "Only supported CGB model" << std::endl;
-		std::cerr << "> force CGB model" << std::endl;
-
-		this->model = Gameboy::CGB;
+		//this->_rom.exit();
+		this->_cpu->exit();
+		this->_output->exit();
+		this->_input->exit();
 	}
+	this->_running = false;
+}
 
-	support_code = this->game->get_sgb_support_code();
-	if (support_code == 0x3 && this->model != Gameboy::SGB)
+void			Gameboy::softReset(void)
+{
+	if (this->_running)
 	{
-		std::cerr << "Only supported CGB model" << std::endl;
-		std::cerr << "> force CGB model" << std::endl;		
-
-		this->model = Gameboy::SGB;
+		this->_cpu->init();
+		this->_output->init();
+		this->start();
 	}
+}
 
-	std::cout << "Starting CPU ..." << std::endl;
-	return (true);
+void			Gameboy::hardReset(void)
+{
+	if (this->_running)
+	{
+		//this->_rom.init();
+		this->_cpu->init();
+		this->_output->init();
+		this->start();
+	}
+}
+
+void			Gameboy::start(void)
+{
+	gbuser = this;
+	if (!this->_skipboot)
+		this->boot();
+
+	while (this->_cpu->_clockfreq && this->isRunning())
+	{
+		this->_cpu->frameskip();
+		this->_cpu->execute();
+		this->_cpu->dma();
+		if (*(gbram + 0xFF40) & (1 << 7))
+			this->_output->_callback(this->_output->getOutput());
+	}
+}
+
+void			Gameboy::boot(void)
+{
+	while (this->_cpu->_clockfreq && this->isRunning())
+	{
+		if ((this->_cpu->_pc == this->_rom->start_addr) &&
+			(this->_cpu->_pc > DMGbiosSize))
+		{
+			std::cerr << "START ADDR" << std::endl;
+			return ;
+		}
+
+		this->_cpu->frameskip();
+		this->_cpu->execute((unsigned char*)DMGbios);
+		this->_cpu->dma();
+		if (*(gbram + 0xFF40) & (1 << 7))
+			this->_output->_callback(this->_output->getOutput());
+	}
+}
+
+GameboyRom*		Gameboy::getRom(void)
+{
+	return (this->_rom);
+}
+
+GameboyCpu*		Gameboy::getCpu(void)
+{
+	return (this->_cpu);
+}
+
+GameboyLcd*		Gameboy::getOutput(void)
+{
+	return (this->_output);
+}
+
+GameboyIO*		Gameboy::getInput(void)
+{
+	return (this->_input);
+}
+
+GameboyClient&	Gameboy::getClient(void)
+{
+	return (this->_me);
 }

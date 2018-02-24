@@ -1,3 +1,4 @@
+%ifdef aTEST
 %include 'register.s'
 
 section		.data
@@ -39,3 +40,5 @@ main:
 
 	leave
 	ret
+
+%endif

@@ -9,23 +9,23 @@
 # include <string.h>
 # include <iostream>
 
-	class	Rom
+/*	class	Rom
 	{
 		public:
 
-			bool			status;
+			bool			_status;
 
-			Rom(const char *filename);
-			~Rom();
+			Rom(void);
+			~Rom(void);
 
-			bool			load(const int fd);
 			bool			load(const char *filename);
-			bool			header(void);
+			bool			load(const int fd);
 
 			unsigned char	get_sgb_support_code(void);
 			unsigned char	get_cgb_support_code(void);
 			size_t			get_rom_size();
 			size_t			get_ram_size();
+
 			std::string		get_cartridge_string();
 			std::string		get_rom_size_string();
 			std::string		get_ram_size_string();
@@ -33,8 +33,13 @@
 
 			size_t			calc_checksum();
 
+			unsigned char	*get_code();
+			unsigned short	get_start_address();
+			unsigned char	*get_buffer();
 
-		private :
+			void			disassemble(const char *filename, bool skip = true);
+
+		protected :
 
 			char			*filename;
 			unsigned char	*buffer;
@@ -56,5 +61,5 @@
 
 			bool			info(void);
 	};
-
+*/
 #endif
