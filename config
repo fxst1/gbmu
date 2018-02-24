@@ -1,0 +1,19 @@
+default_ui : ./xml/ui.glade
+default_css : ./xml/ui.css
+server_panel_ui : ./xml/server_panel.glade
+server_panel_css : ./xml/server_panel.css
+server_client_ui : ./xml/server_client.glade
+client_panel_ui : ./xml/client_panel.glade
+client_panel_css : ./xml/client_panel.css
+client_server_ui : ./xml/client_server.glade
+
+server_slots : 5
+default_server_port : 11000
+
+default_client_port : 11001
+default_client_username : Gbmu
+auto_connect : true
+notify_kick : true
+notify_disconnect : true
+
+server_list : ./server.list

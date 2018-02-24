@@ -1,0 +1,52 @@
+#include <debugger.hpp>
+
+FlagViewer::FlagViewer(void):
+	Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5)
+{
+	this->addr = NULL;
+	this->label = Gtk::Label("Flags : Undefined");
+	this->pack_start(this->label, Gtk::PACK_SHRINK);
+}
+
+FlagViewer::FlagViewer(unsigned long start_address):
+	Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5)
+{
+	this->addr = (unsigned char*)start_address;
+	this->label = Gtk::Label("Flags : Undefined");
+	this->pack_start(this->label, Gtk::PACK_SHRINK);
+	this->Reset();
+}
+
+FlagViewer::~FlagViewer()
+{}
+
+void	FlagViewer::SetAddr(unsigned long addr)
+{
+	this->addr = (unsigned char*)addr;
+	this->Reset();
+}
+
+void	FlagViewer::Reset(void)
+{
+	int				i = 7;
+	int				n = 0;
+	std::string		s = "";
+	std::string		buf[4] = {"Z", "N", "H", "CY"};
+
+	if (this->addr == 0)
+		this->label = Gtk::Label("Flags : Undefined");
+	else
+	{
+		while (i >= 4)
+		{
+			if (this->addr[0] & (1 << i))
+				s += buf[n];
+			else
+				s += " ";
+			s += " ";
+			n++;
+			i--;
+		}
+		this->label = Gtk::Label("Flags : " + s);
+	}
+}

@@ -1,0 +1,97 @@
+#include <debugger.hpp>
+
+ValueLabel::ValueLabel(void):
+	Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5)
+{
+	this->separator_token = "";
+	this->n_value = 0;
+	this->names = NULL;
+	this->addr = 0;
+	this->n_value = 0;
+	this->labels = std::vector<Gtk::Label>();	
+}
+
+ValueLabel::ValueLabel(unsigned int n_value, std::string* names, unsigned long start_address, unsigned int n_octet):
+	Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5)
+{
+	unsigned int	i = 0;
+
+	this->separator_token = " : ";
+
+	this->n_value = n_value;
+	this->names = new std::string[n_value]();
+	this->addr = (unsigned char*)start_address;
+	this->n_octet = n_octet;
+
+
+	this->labels = std::vector<Gtk::Label>();
+	while (i < n_value)
+	{
+		this->names[i] = std::string(names[i]);
+		if (this->addr == 0)
+			this->labels.push_back( Gtk::Label(names[i] + this->separator_token + "Undefined") ); 
+		else
+			this->labels.push_back( Gtk::Label(names[i] + this->separator_token + this->GetValue(this->addr + (i * this->n_octet))) ); 
+		this->pack_start(this->labels[i], Gtk::PACK_SHRINK);
+		i++;
+	}
+}
+
+ValueLabel::~ValueLabel()
+{
+	delete[]	this->names;
+}
+
+void		ValueLabel::SetAddr(unsigned long addr)
+{
+	this->addr = (unsigned char*)addr;
+	this->Reset();
+}
+
+void		ValueLabel::Reset(void)
+{
+	unsigned int	i = 0;
+
+	while (i < this->n_value)
+	{
+		this->Reset(i * this->n_octet);
+		i++;
+	}
+
+	//printf("End reset\n");
+}
+
+void		ValueLabel::Reset(unsigned int index)
+{
+	unsigned char		*real_addr = this->addr + index;
+	std::string			ntext = "";
+
+	//printf("RESET : %p\n", real_addr);
+	//printf("> %u\n", index);
+	//printf("> %x\n", *real_addr);
+	ntext += this->names[index];
+	ntext += this->separator_token;
+
+	if (this->addr == 0)
+		ntext += "Undefined";
+	else
+		ntext += this->GetValue(real_addr);
+	//printf("> %s", ntext.c_str());
+	this->labels[index].set_text(ntext);
+}
+
+std::string		ValueLabel::GetValue(unsigned char *addr)
+{
+	char				buf[1024] = {0};
+	std::string			format = "";
+	unsigned long int	value = 0;
+
+	memcpy(&value, addr, sizeof(unsigned char) * this->n_octet);
+
+	format = "0x%0";
+	format += std::to_string(this->n_octet);
+	format += "x"; 
+
+	sprintf(buf, format.c_str(), value);
+	return (std::string(buf));
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.20.0 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkFileFilter" id="All files">
+    <patterns>
+      <pattern>*</pattern>
+    </patterns>
+  </object>
+  <object class="GtkFileFilter" id="CGB">
+    <patterns>
+      <pattern>*.gbc</pattern>
+    </patterns>
+  </object>
+  <object class="GtkFileFilter" id="DMG">
+    <patterns>
+      <pattern>*.gb</pattern>
+    </patterns>
+  </object>
+  <object class="GtkFileFilter" id="Supported">
+    <patterns>
+      <pattern>*.gb</pattern>
+      <pattern>*.gbc</pattern>
+      <pattern>*.bin</pattern>
+      <pattern>*.raw</pattern>
+    </patterns>
+  </object>
+</interface>

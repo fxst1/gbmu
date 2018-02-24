@@ -1,0 +1,155 @@
+#include <debugger.hpp>
+/*
+Debugger::Debugger(Gameboy *game, unsigned long rssp)
+{
+	std::string		asm_text = "";
+	char			buf[1024] = {0};
+	size_t			len = 0;
+	FILE			*fp = NULL;
+
+	this->game = game;
+	this->rssp = NULL;
+//	this->game->getRom()->disassemble("temp.dbg", this->game->skip);
+	this->dump = dump_by_line( this->game->get_rom()->get_buffer() );
+
+	if ((fp = fopen("temp.dbg", "r")))
+	{
+		while ((len = fread(buf, 1, sizeof(buf) - 1, fp)))
+		{
+			asm_text += buf;
+			bzero(buf, sizeof(buf));
+		}
+
+		fclose(fp);
+	}
+
+	this->asm_view = new AsmViewer(asm_text.c_str());
+	this->value_view = new ValueViewer(rssp);
+
+	this->icon_run = Gtk::Image(Gtk::Stock::YES, Gtk::IconSize(20));
+	this->icon_stop = Gtk::Image(Gtk::Stock::STOP, Gtk::IconSize(20));
+	this->icon_pause = Gtk::Image(Gtk::Stock::MEDIA_PAUSE, Gtk::IconSize(20));
+	this->icon_next = Gtk::Image(Gtk::Stock::MEDIA_NEXT, Gtk::IconSize(20));
+	this->icon_br = Gtk::Image(Gtk::Stock::ABOUT, Gtk::IconSize(20));
+
+	this->tbar = Gtk::Toolbar();
+	this->run = Gtk::ToolButton(this->icon_run, "Run");
+	this->stop = Gtk::ToolButton(this->icon_stop, "Stop");
+	this->pause = Gtk::ToolButton(this->icon_pause, "Pause");
+	this->next = Gtk::ToolButton(this->icon_next, "Next");
+	this->br = Gtk::ToolButton(this->icon_br, "Breakpoint");
+
+	this->tbar.append(this->run);
+	this->tbar.append(this->stop);
+	this->tbar.append(this->pause);
+	this->tbar.append(this->next);
+	this->tbar.append(this->br);
+
+	this->box = Gtk::Box(Gtk::ORIENTATION_VERTICAL);
+	this->mainbox = Gtk::Box(Gtk::ORIENTATION_HORIZONTAL);
+	this->btns = Gtk::ButtonBox(Gtk::ORIENTATION_HORIZONTAL);
+	this->quit = Gtk::Button("_Quit", true);
+
+	this->btns.pack_start(this->quit);
+
+	this->set_title("Debugger");
+	this->set_default_size(1000, 800);
+
+	this->quit.signal_clicked().connect(sigc::mem_fun(this, &Debugger::leave));
+
+	this->run.signal_clicked().connect(sigc::mem_fun(this, &Debugger::run_click));
+	this->stop.signal_clicked().connect(sigc::mem_fun(this, &Debugger::stop_click));
+	this->pause.signal_clicked().connect(sigc::mem_fun(this, &Debugger::pause_click));
+	this->next.signal_clicked().connect(sigc::mem_fun(this, &Debugger::next_click));
+	this->br.signal_clicked().connect(sigc::mem_fun(this, &Debugger::breakpoint_click));
+
+	this->mainbox.pack_start(*this->asm_view);
+	this->mainbox.pack_start(*this->value_view);
+	this->box.pack_start(this->tbar, Gtk::PACK_SHRINK);
+	this->box.pack_start(this->mainbox);
+	this->box.pack_start(this->btns, Gtk::PACK_SHRINK);
+
+	this->add(this->box);
+	this->show_all_children();
+	this->show();
+}
+
+Debugger::~Debugger(void)
+{
+	size_t	index = 0;
+
+	while (index < this->dump.size())
+	{
+		free(this->dump[index]);
+		index++;
+	}
+
+	delete this->asm_view;
+	delete this->value_view;
+}
+
+void	Debugger::run_click(void)
+{
+	this->game->start();
+	this->rssp = this->game->request(Cpu::rssp | Cpu::wait);
+
+	if (this->rssp  != NULL)
+	{
+		this->asm_view->ShowCurrent( this->pc_2_line() );
+		this->value_view->Reset((unsigned long)rssp);
+	}
+}
+
+void	Debugger::stop_click(void)
+{
+	this->game->request(Cpu::stop);	
+	this->value_view->Reset(0);
+}
+
+void	Debugger::pause_click(void)
+{
+	if (!this->game->is_start)
+		this->game->start();
+
+	this->game->request(Cpu::rssp | Cpu::wait);
+	this->value_view->Reset();
+}
+
+void	Debugger::next_click(void)
+{
+	this->asm_view->ShowCurrent( this->pc_2_line() );
+	this->game->request(Cpu::rssp | Cpu::next);
+	this->value_view->Reset();
+	//this->disp->refresh();
+}
+
+void	Debugger::breakpoint_click(void)
+{
+//	this->cpu->breakpoint();
+}
+
+void	Debugger::leave(void)
+{
+	this->hide();
+}
+
+size_t	Debugger::pc_2_line(unsigned char *rssp)
+{
+	size_t			index = 0;
+	size_t			len = this->dump.size();
+	size_t			bytes = 0;
+	unsigned short	pc = 0;
+
+	if (!rssp)
+		rssp = this->rssp;
+
+	rssp += 8;
+	memcpy(&pc, rssp, sizeof(pc));
+	while (index < len && bytes != pc)
+	{
+		bytes += this->dump[index][0];
+		index++;
+	}
+
+	return (index);
+}*/

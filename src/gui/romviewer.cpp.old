@@ -1,0 +1,8 @@
+#include <debugger.hpp>
+/*
+RomViewer::RomViewer(unsigned char **addr)
+{
+	Glib::RefPtr<Glib::Object> object = m_refBuilder->get_object("menubar");
+
+	this->addr = addr;
+}*/

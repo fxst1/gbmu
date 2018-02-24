@@ -1,0 +1,1354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.20.0 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkBox" id="sprite">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">center</property>
+    <property name="valign">center</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
+    <property name="orientation">vertical</property>
+    <property name="baseline_position">top</property>
+    <child>
+      <object class="GtkGrid" id="sprite-content">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <property name="row_homogeneous">True</property>
+        <property name="column_homogeneous">True</property>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton">
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-76">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-77">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-78">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-79">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-80">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="sprite_2">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-82">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-83">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-84">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-85">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-86">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-87">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-88">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="sprite_4">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-90">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-91">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-92">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-93">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-94">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-95">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-96">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">3</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="sprite_5">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-98">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-99">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">40</property>
+            <property name="height_request">40</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-100">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-101">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-102">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-103">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-104">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">4</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="sprite_6">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-106">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-107">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-108">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-109">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-110">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-111">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-112">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">5</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="sprite_7">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-114">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-115">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-116">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-117">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-118">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-119">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-120">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">6</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-121">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-122">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-123">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-124">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-125">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-126">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-127">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id="oam2-128">
+            <property name="name">ColorPickerButton</property>
+            <property name="width_request">20</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="use_alpha">True</property>
+            <style>
+              <class name="oam-cell"/>
+            </style>
+          </object>
+          <packing>
+            <property name="left_attach">7</property>
+            <property name="top_attach">7</property>
+          </packing>
+        </child>
+        <style>
+          <class name="oam-grid"/>
+        </style>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">-1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="sprite-name">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">0x8000</property>
+            <property name="justify">right</property>
+            <property name="single_line_mode">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sprite-code">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">000</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkSeparator">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <style>
+      <class name="oam-box"/>
+    </style>
+  </object>
+</interface>

@@ -1,0 +1,66 @@
+#include <display.hpp>
+#include <iostream>
+/*
+Display::Display(bool allowbank1 = false)
+{
+	this->drv = new LcdDriverDMG();
+	this->width = 160;
+	this->height = 144;
+	this->set_size_request(this->width, this->height);
+	this->buf = Gdk::Pixbuf::create(Gdk::Colorspace::COLORSPACE_RGB, true, 8, this->width, this->height);
+	this->buf->fill(0x00ff00);
+	(void)allowbank1;
+}
+
+Display::~Display()
+{
+
+}
+
+unsigned int	Display::ratioX()
+{
+	return (this->width / 160);
+}
+
+unsigned int	Display::ratioY()
+{
+	return (this->height / 144);
+}
+
+bool			Display::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+{
+	unsigned char*				data;
+	Glib::RefPtr< Gdk::Pixbuf >	dest;
+
+	this->ctx = cr;
+	printf("VRAM: %p\n", this->drv->addr);
+	if (this->drv->addr == NULL)
+	{
+		this->buf->fill(0xFF0000);
+		Gdk::Cairo::set_source_pixbuf(cr, this->buf, 0, 0);
+		cr->paint();
+		return (true);	
+	}
+
+	data = (unsigned char*)this->drv->getVram();
+	printf("%p\n", data);
+	dest = Gdk::Pixbuf::create_from_data(data, Gdk::Colorspace::COLORSPACE_RGB, false, 8, this->width, this->height, 4 * 160);
+//	this->buf->fill(0xFF00FF);
+	Gdk::Cairo::set_source_pixbuf(cr, dest, 0, 0);
+	cr->paint();
+	return (true);
+	(void)cr;
+}
+
+void			Display::reset(unsigned char *addr)
+{
+	this->drv->reset(addr);
+	if (addr)
+		this->refresh();
+}
+
+void			Display::refresh()
+{
+	this->queue_draw();
+}
+*/

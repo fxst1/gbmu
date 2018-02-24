@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=GBmu
+Comment=Game Boy Advance emulator
+Icon=/home/fxst1/Desktop/code/gbmu/gb.png
+Path=/home/fxst1/Desktop/code/gbmu
+Exec=/home/fxst1/Desktop/code/gbmu/gbmu
+Terminal=false
+Type=Application
+Categories=GTK;Game;ArcadeGame;
+Keywords=emulator;Nintendo;Game Boy;GBC;GB
+StartupNotify=true

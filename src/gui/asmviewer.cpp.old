@@ -1,0 +1,260 @@
+#include <debugger.hpp>
+
+AsmViewer::AsmViewer(void)
+{
+	this->scroll = Gtk::ScrolledWindow();
+	this->scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
+	this->refTagTable = Gtk::TextBuffer::TagTable::create();
+	this->fct = Gtk::TextBuffer::Tag::create();
+	this->reg = Gtk::TextBuffer::Tag::create();
+	this->value = Gtk::TextBuffer::Tag::create();
+	this->comment = Gtk::TextBuffer::Tag::create();
+	this->common = Gtk::TextBuffer::Tag::create();
+	this->cond = Gtk::TextBuffer::Tag::create();
+	this->syntax_error = Gtk::TextBuffer::Tag::create();
+
+	this->refTagTable->add(this->fct);
+	this->refTagTable->add(this->reg);
+	this->refTagTable->add(this->comment);
+	this->refTagTable->add(this->value);
+	this->refTagTable->add(this->common);
+	this->refTagTable->add(this->cond);
+	this->refTagTable->add(this->syntax_error);
+
+	this->buf = Gtk::TextBuffer::create(this->refTagTable);
+
+	this->fct->property_foreground() = "orange";
+	this->value->property_foreground() = "purple";
+	this->reg->property_foreground() = "green";
+	this->cond->property_foreground() = "blue";
+	this->common->property_foreground() = "black";
+	this->comment->property_foreground() = "grey";
+	this->syntax_error->property_foreground() = "red";
+	this->syntax_error->property_underline() = Pango::UNDERLINE_SINGLE;
+
+	this->buf->set_text("");
+	this->view.set_buffer(this->buf);
+
+	this->pack_start(this->scroll);
+	this->scroll.add(this->view);
+
+	this->scroll.show_all_children();
+	this->scroll.show();
+
+	this->laststart = this->buf->begin();
+	this->lastend = this->buf->end();
+}
+
+AsmViewer::AsmViewer(const char *text):
+Gtk::Box(Gtk::ORIENTATION_VERTICAL),
+container(Gtk::ORIENTATION_HORIZONTAL)
+{
+	this->set_hexpand(true);
+	this->set_vexpand(true);
+
+	this->scroll = Gtk::ScrolledWindow();
+	this->scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
+	this->refTagTable = Gtk::TextBuffer::TagTable::create();
+	this->fct = Gtk::TextBuffer::Tag::create();
+	this->line = Gtk::TextBuffer::Tag::create();
+	this->actual = Gtk::TextBuffer::Tag::create();
+	this->reg = Gtk::TextBuffer::Tag::create();
+	this->value = Gtk::TextBuffer::Tag::create();
+	this->comment = Gtk::TextBuffer::Tag::create();
+	this->common = Gtk::TextBuffer::Tag::create();
+	this->cond = Gtk::TextBuffer::Tag::create();
+	this->syntax_error = Gtk::TextBuffer::Tag::create();
+
+	this->refTagTable->add(this->fct);
+	this->refTagTable->add(this->actual);
+	this->refTagTable->add(this->line);
+	this->refTagTable->add(this->reg);
+	this->refTagTable->add(this->comment);
+	this->refTagTable->add(this->value);
+	this->refTagTable->add(this->common);
+	this->refTagTable->add(this->cond);
+	this->refTagTable->add(this->syntax_error);
+
+	this->buf = Gtk::TextBuffer::create(this->refTagTable);
+	this->buflines = Gtk::TextBuffer::create(this->refTagTable);
+
+	this->actual->property_underline() = Pango::UNDERLINE_SINGLE;
+	this->line->property_foreground() = "black";
+	this->fct->property_foreground() = "orange";
+	this->value->property_foreground() = "purple";
+	this->reg->property_foreground() = "green";
+	this->cond->property_foreground() = "blue";
+	this->common->property_foreground() = "black";
+	this->comment->property_foreground() = "grey";
+	this->syntax_error->property_background() = "red";
+	this->syntax_error->property_underline() = Pango::UNDERLINE_SINGLE;
+
+	this->buf->set_text(text);
+	this->view.set_buffer(this->buf);
+
+	this->buflines->set_text( this->CreateLineBuffer(text).c_str() );
+	this->lines.set_buffer( this->buflines );
+	this->lines.set_editable(false);
+
+	this->pack_start(this->scroll);
+	this->scroll.add(this->container);
+	this->container.pack_start(this->lines);
+	this->container.pack_start(this->view);
+
+	this->ParseText();
+
+	this->laststart = this->buf->begin();
+	this->lastend = this->buf->end();
+	this->ShowCurrent(0);
+	this->buflines->apply_tag(this->line, this->buflines->begin(), this->buflines->end());
+
+	this->scroll.show_all_children();
+	this->scroll.show();
+}
+
+AsmViewer::~AsmViewer()
+{
+}
+
+std::string							AsmViewer::CreateLineBuffer(size_t n_lines)
+{
+	size_t		index = 0;
+	std::string	s = "";
+
+	while (index < n_lines)
+	{
+		s += (std::to_string(index + 1) + "\n");
+		index++;
+	}
+
+	return (s);
+}
+
+std::string							AsmViewer::CreateLineBuffer(const char *text)
+{
+	size_t		index = 0;
+	std::string	s = "";
+
+	while (*text)
+	{
+		if (*text == '\n')
+		{
+			s += (std::to_string(index + 1) + "\n");
+			index++;
+		}
+
+		text++;
+	}
+
+	return (s);
+}
+
+void								AsmViewer::ParseText(void)
+{
+	Gtk::TextBuffer::iterator	i = this->buf->begin();
+	Gtk::TextBuffer::iterator	lastiter = i;
+	std::string					s = "";
+
+	while (i != buf->end())
+	{
+		while (*i && *i != '\n')
+		{
+			if (*i == ';')
+			{
+				lastiter = i;
+				while (*i && *i != '\n')
+					i++;
+
+				buf->apply_tag(this->comment, lastiter, i);
+			}
+			else if (*i == ' ' || *i == '\t')
+			{
+				while (*i && (*i == ' ' || *i == '\t'))
+					i++;
+			}
+			else
+			{
+				s = "";
+				lastiter = i;
+				while (*i && *i != ' ' && *i != '\t' && *i != ';' && *i != '(' && *i != ')' && *i != ',')
+				{
+					s += tolower(*i);
+					i++;
+				}
+
+				buf->apply_tag(AsmViewer::ParseString(s), lastiter, i);
+
+				if (s.length() <= 1)
+					i++;
+			}
+		}
+
+		if (*i == '\n')
+			i++;
+	}
+}
+
+Glib::RefPtr<Gtk::TextTag>		AsmViewer::ParseString(std::string s)
+{
+	if (s[0] == ',' || s[0] == '(' || s[0] == ')')
+		return (this->common);
+	else if (s[0] == '$')
+		return (this->value);
+	else if (s[0] == '0' && s[1] == 'x')
+		return (this->value);
+	else if (isdigit(s[0]))
+	{
+		size_t		i = 1;
+		while (i < s.length())
+		{
+			if (!isdigit(s[i]))
+				return (this->syntax_error);
+			i++;
+		}
+
+		return (this->value);
+	}
+	else
+	{
+		if (s == "a" || s == "f" ||
+			s == "b" || s == "c" ||
+			s == "d" || s == "e" ||
+			s == "h" || s == "l" ||
+			s == "sp" || s == "pc" ||
+			s == "af" || s == "bc" || s == "de" || s == "hl")
+			return (this->reg);
+		else if (s == "nz" || s == "z" || s == "nc" || s == "c")
+			return (this->cond);
+	}
+
+	return (this->fct);
+}
+
+void				AsmViewer::ShowCurrent(size_t line)
+{
+	size_t						index = 0;
+	Gtk::TextBuffer::iterator	start = this->buf->begin();
+	Gtk::TextBuffer::iterator	end = this->buf->begin();
+
+	if (this->laststart != this->lastend)
+		this->buf->remove_tag(this->actual, this->laststart, this->lastend);
+//	this->buflines->remove_tag(this->actual);
+
+	while (index < line && start != this->buf->end())
+	{
+		if (*start == '\n')
+			index++;
+
+		start++;
+	}
+
+	end = start;
+	while (end != this->buf->end() && *end != '\n')
+		end++;
+
+	this->buf->apply_tag(this->actual, start, end);
+	this->laststart = start;
+	this->lastend = end;
+}

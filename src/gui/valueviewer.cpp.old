@@ -1,0 +1,74 @@
+#include <debugger.hpp>
+
+ValueViewer::ValueViewer(unsigned long rssp):
+Gtk::Box(Gtk::ORIENTATION_HORIZONTAL),
+vbox_reg(Gtk::ORIENTATION_VERTICAL, 5),
+vbox_stack(Gtk::ORIENTATION_VERTICAL, 5),
+regs("Registers"),
+stack("Stack")
+{
+	std::string	names_af[2] = {"A", "F"};
+	std::string	names_bc[2] = {"B", "C"};
+	std::string	names_de[2] = {"D", "E"};
+	std::string	names_hl[2] = {"H", "L"};
+	std::string	names_sp = "SP";
+	std::string	names_pc = "PC";
+
+	this->rssp = (unsigned char*)rssp;
+
+	this->af = new ValueLabel(2, names_af, rssp == 0 ? 0 : rssp);
+	this->bc = new ValueLabel(2, names_bc, rssp == 0 ? 0 : rssp + 2);
+	this->de = new ValueLabel(2, names_de, rssp == 0 ? 0 : rssp + 4);
+	this->hl = new ValueLabel(2, names_hl, rssp == 0 ? 0 : rssp + 6);
+	this->pc = new ValueLabel(1, &names_pc, rssp == 0 ? 0 : rssp + 8, 2);
+	this->sp = new ValueLabel(1, &names_sp, rssp == 0 ? 0 : rssp + 10, 2);
+
+	this->flags = new FlagViewer(rssp == 0 ? 0 : rssp + 1);
+
+	this->vbox_reg.pack_start(*this->af, Gtk::PACK_SHRINK);
+	this->vbox_reg.pack_start(*this->bc, Gtk::PACK_SHRINK);
+	this->vbox_reg.pack_start(*this->de, Gtk::PACK_SHRINK);
+	this->vbox_reg.pack_start(*this->hl, Gtk::PACK_SHRINK);
+	this->vbox_reg.pack_start(*this->pc, Gtk::PACK_SHRINK);
+	this->vbox_reg.pack_start(*this->sp, Gtk::PACK_SHRINK);
+	this->vbox_reg.pack_start(*this->flags, Gtk::PACK_SHRINK);
+
+	this->regs.add(this->vbox_reg);
+	this->stack.add(this->vbox_stack);
+
+	this->pack_start(this->regs, Gtk::PACK_SHRINK);
+	this->pack_start(this->stack, Gtk::PACK_SHRINK);
+}
+
+ValueViewer::~ValueViewer()
+{
+	delete this->af;
+	delete this->bc;
+	delete this->de;
+	delete this->hl;
+	delete this->pc;
+	delete this->sp;
+	delete this->flags;
+}
+
+void		ValueViewer::Reset(unsigned long rssp)
+{
+	this->af->SetAddr(rssp == 0 ? 0 : rssp);
+	this->bc->SetAddr(rssp == 0 ? 0 : rssp + 2);
+	this->de->SetAddr(rssp == 0 ? 0 : rssp + 4);
+	this->hl->SetAddr(rssp == 0 ? 0 : rssp + 6);
+	this->pc->SetAddr(rssp == 0 ? 0 : rssp + 8);
+	this->sp->SetAddr(rssp == 0 ? 0 : rssp + 10);
+	this->flags->SetAddr(rssp == 0 ? 0 : rssp + 1);
+}
+
+void		ValueViewer::Reset(void)
+{
+	this->af->Reset();
+	this->bc->Reset();
+	this->de->Reset();
+	this->hl->Reset();
+	this->pc->Reset();
+	this->sp->Reset();
+	this->flags->Reset();
+}
